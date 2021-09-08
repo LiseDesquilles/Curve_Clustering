@@ -3,7 +3,6 @@
 
 # La fonction prend en entrée :
 #    - Data : Base de données (Format : Genes x individus)
-#    - Kaplan_Meier_Path : Chemin d'accès du fichier KaplanMeierCurves.R
 #    - use.CCR : Si il est déjà calculé, l'utilisateur peut renseigner un fichier CCR 
 #    - couleurs : Vecteur contenant 4 couleurs
 
@@ -12,15 +11,12 @@
 #    - $CCR : Le fichier CCR a renseigner les prochaines fois pour gagner du temps de calcul
 
 # A titre d'exemple :
-   # Kaplan_Meier_Path <- "~/Fonctions/KaplanMeierCurves.R"
    # load("D:/home/user/Documents/BDD/11.19 Mise en place Base composite/TCGA Combat N.RData")
    # Data <- TCGA.Combat
    # load("D:/home/user/Documents/BDD/11.19 Reduction de dimensions/CCR_4_TCGA.RData")
    # use.CCR <- CCR
 
-CurvClust_4_subclasses <- function(Data, Kaplan_Meier_Path, use.CCR = NULL, couleurs = NULL) {
-  
-  source(Kaplan_Meier_Path)
+CurvClust_4_subclasses <- function(Data, use.CCR = NULL, couleurs = NULL) {
   
   library("FactoMineR")
   library("factoextra")
@@ -189,4 +185,5 @@ CurvClust_4_subclasses <- function(Data, Kaplan_Meier_Path, use.CCR = NULL, coul
 }
 
 # Exemple de commande pour lancer la fonction :
-   # res <- CurvClust_4_subclasses(Data, Kaplan_Meier_Path, use.CCR)
+   # res <- CurvClust_4_subclasses(Data, use.CCR)
+   
