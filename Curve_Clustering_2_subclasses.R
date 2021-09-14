@@ -42,11 +42,9 @@ CurvClust_2_subclasses <- function(Data, use.CCR = NULL) {
     v[v==0] <- 1
     
     SNR <- abs(mean.c) / sqrt(v)
-    print("Summary SNR :")
-    print(summary(SNR))
     
     if (plot == TRUE) {
-      hist(SNR[SNR < round(summary(SNR)[[4]])], col = "lightblue", main = "SNR")
+      plot(hist(SNR[SNR < round(summary(SNR)[[4]])], col = "lightblue", main = "SNR"))
       abline(v = seuil, col = "red")
     }
     
@@ -157,10 +155,10 @@ CurvClust_2_subclasses <- function(Data, use.CCR = NULL) {
   print("Clustering: completed")
   print("Done !")
   
-  res <- list("Class" = classe, "CCR" = CCR)
+  res <- list("Class" = classe, "CCR" = CCR, "Reduced_Base" = Data.Pval)
   return(res)
   
 }
 
 # Exemple de commande pour lancer la fonction :
-  # res <- CurvClust_2_subclasses(Data, use.CCR)
+#  res <- CurvClust_2_subclasses(Data, use.CCR)
