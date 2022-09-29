@@ -1,21 +1,13 @@
-# Curve Clustering - 2 subclasses:
-# Permet de classer une base de CHCs periveineux en CHCs GOOD ou BAD d'après la méthode de Curve Clustering
+# Curve Clustering - 2 subclasses : 
+# Allows to classify a CHCs base in GOOD-PV/BAD-PV according to the Curve Clustering method
 
-# La fonction prend en entrée :
-#     - Data : Base de données (Format : Gènes x individus)
-#     - use.CCR : Si il est déjà calculé, l'utilisateur peut renseigner un objet CCR
+# The function takes as input :
+#    - Data : Database (Format: Genes x individuals)
+#    - use.CCR : If it is already calculated, the user can fill in a CCR file 
 
-# La fonction renvoie en sortie :
-#     - $Class : Un dataframe contenant les identifiants et la classe obtenue par CurveClustering
-#     - $CCR : Un objet CCR à renseigner les prochaines fois pour gagner du temps de calcul
-
-# A titre d'exemple
-  # load("D:/home/user/Documents/BDD/Base_ICGC/10-19_Analyse sous groupe MUT vs WT/TCGA_MUT_Survie.RData") # 51923 x 61 CHCs
-  # load("D:/home/user/Documents/BDD/11.19 Mise en place Base composite/TCGA Combat N.RData") # TCGA.Combat : 19079 x 370 CHCs
-  # Data <- TCGA.Combat[,colnames(TCGA.Combat) %in% colnames(TCGA_Norm_MUT)] # 19079 x 61 CHCs
-  # 
-  # load("D:/home/user/Documents/BDD/11.19 Reduction de dimensions/CCR_2_Application_TCGA.RData")
-  # use.CCR <- CCR
+# The function returns as output :
+#    - $Class : A dataframe containing the identifiers and the class obtained by Curve Clustering
+#    - $CCR : The CCR file to be filled in the next times to save calculation time
 
 CurvClust_2_subclasses <- function(Data, use.CCR = NULL) {
   
@@ -103,7 +95,7 @@ CurvClust_2_subclasses <- function(Data, use.CCR = NULL) {
   
   graphics.off()
   plot(1:nrow(Data),type="n",ylab="Expression (en log)", xaxt = "n", xlab = "", ylim = c(1,max(Data)))
-  mtext(1, text = "Gènes", line = 1)
+  mtext(1, text = "GÃ¨nes", line = 1)
   
   for (i in 1:ncol(Data)) {
     lines(1:nrow(Data),Data[,i], col=c(i))
@@ -159,6 +151,3 @@ CurvClust_2_subclasses <- function(Data, use.CCR = NULL) {
   return(res)
   
 }
-
-# Exemple de commande pour lancer la fonction :
-#  res <- CurvClust_2_subclasses(Data, use.CCR)
