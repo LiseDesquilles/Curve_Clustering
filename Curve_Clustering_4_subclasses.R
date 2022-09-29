@@ -1,20 +1,14 @@
 # Curve Clustering - 4 subclasses : 
-# Permet de classer une base de CHCs en PP/PV/ECM/STEM d'après la méthode de Curve Clustering
+# Allows to classify a CHCs base in PP/PV/ECM/STEM according to the Curve Clustering method
 
-# La fonction prend en entrée :
-#    - Data : Base de données (Format : Genes x individus)
-#    - use.CCR : Si il est déjà calculé, l'utilisateur peut renseigner un fichier CCR 
-#    - couleurs : Vecteur contenant 4 couleurs
+# The function takes as input :
+#    - Data : Database (Format: Genes x individuals)
+#    - use.CCR : If it is already calculated, the user can fill in a CCR file 
+#    - couleurs : Vector containing 4 colors
 
-# La fonction renvoie en sortie :
-#    - $Class : Un dataframe contenant les identifiants et la classe obtenue par Curve Clustering
-#    - $CCR : Le fichier CCR a renseigner les prochaines fois pour gagner du temps de calcul
-
-# A titre d'exemple :
-   # load("D:/home/user/Documents/BDD/11.19 Mise en place Base composite/TCGA Combat N.RData")
-   # Data <- TCGA.Combat
-   # load("D:/home/user/Documents/BDD/11.19 Reduction de dimensions/CCR_4_TCGA.RData")
-   # use.CCR <- CCR
+# The function returns as output :
+#    - $Class : A dataframe containing the identifiers and the class obtained by Curve Clustering
+#    - $CCR : The CCR file to be filled in the next times to save calculation time
 
 CurvClust_4_subclasses <- function(Data, use.CCR = NULL, couleurs = NULL) {
   
@@ -24,7 +18,7 @@ CurvClust_4_subclasses <- function(Data, use.CCR = NULL, couleurs = NULL) {
   
   t.Data <- as.data.frame(t(Data))
   
-  ### Distribution des données
+  ### Data distribution
   
   res <- PCA(t(Data), graph = F)
   plot(fviz_pca_ind(res, col.ind = "#00BFC4"))
@@ -182,8 +176,4 @@ CurvClust_4_subclasses <- function(Data, use.CCR = NULL, couleurs = NULL) {
   res <- list("Class" = classe, "CCR" = CCR)
   return(res)
   
-}
-
-# Exemple de commande pour lancer la fonction :
-   # res <- CurvClust_4_subclasses(Data, use.CCR)
-   
+}   
