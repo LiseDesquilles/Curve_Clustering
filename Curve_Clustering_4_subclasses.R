@@ -5,12 +5,14 @@
 #    - Data : Database (Format: Genes x individuals)
 #    - use.CCR : If it is already calculated, the user can fill in a CCR file 
 #    - couleurs : Vector containing 4 colors
+#    - seuil_SNR : Threshold for the SNR function
+#    - seuil_Variance : Threshold for the Variance test
 
 # The function returns as output :
 #    - $Class : A dataframe containing the identifiers and the class obtained by Curve Clustering
 #    - $CCR : The CCR file to be filled in the next times to save calculation time
 
-CurvClust_4_subclasses <- function(Data, use.CCR = NULL, couleurs = NULL) {
+CurvClust_4_subclasses <- function(Data, use.CCR = NULL, couleurs = NULL, seuil_SNR = 0, seuil_Variance = 0.01) {
   
   library("FactoMineR")
   library("factoextra")
@@ -26,6 +28,8 @@ CurvClust_4_subclasses <- function(Data, use.CCR = NULL, couleurs = NULL) {
   print("Data distribution : completed")
   
   # Signal-to-Noise Ratio ---------------------------------------------------
+  
+  seuil <- seuil_SNR
   
   SNR <- function(Base, seuil, plot = T) {
     
@@ -57,11 +61,13 @@ CurvClust_4_subclasses <- function(Data, use.CCR = NULL, couleurs = NULL) {
     
   }
   
-  r.Data <- SNR(Data, 0.5, plot = T) # 15016 x 61 CHCs
+  r.Data <- SNR(Data, seuil, plot = T) # 15016 x 61 CHCs
   
   print("SNR: completed")
   
   # Variance test for data reduction ----
+  
+  seuil <- seuil_Variance
   
   varianceReduction <- function(Base, seuil) {
     
@@ -84,7 +90,7 @@ CurvClust_4_subclasses <- function(Data, use.CCR = NULL, couleurs = NULL) {
     
   }
   
-  Data.Pval <- varianceReduction(r.Data, 0.01)
+  Data.Pval <- varianceReduction(r.Data, seuil)
   
   print("Variance test: completed")
   
@@ -171,9 +177,8 @@ CurvClust_4_subclasses <- function(Data, use.CCR = NULL, couleurs = NULL) {
   legend("bottomright", legend = unique(Clust),
           pch = rep(20,4), pt.cex=rep(2.1,4), col = c(col.graph[1],col.graph[2], col.graph[3], col.graph[4]), cex = 1.5)
   
-  print("Done !")
-  
   res <- list("Class" = classe, "CCR" = CCR)
+  print("Done !")
   return(res)
   
 }   
